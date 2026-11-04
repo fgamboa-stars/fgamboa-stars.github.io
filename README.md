@@ -6,6 +6,7 @@ A simple, editable personal portfolio built with plain HTML and CSS, ready to ho
 - `index.html` — your page content (what it says)
 - `styles.css` — your page styling (how it looks)
 - `script.js` — small optional behavior (how it reacts)
+- `images/` — photos used on the page
 - `README.md` — this file
 
 ## Tech stack
@@ -43,7 +44,7 @@ The look is a slide deck, and these pieces repeat across the page:
 2. Name it **`your-username.github.io`** (use YOUR GitHub username exactly). This special name makes it your main site.
 3. Set it to **Public**. Click **Create repository**.
 4. On the new repo page, click **uploading an existing file**.
-5. Drag in `index.html`, `styles.css`, and `script.js`, then write a commit message like `Add portfolio starter files` and click **Commit changes**.
+5. Drag in `index.html`, `styles.css`, `script.js`, and the `images` folder, then write a commit message like `Add portfolio starter files` and click **Commit changes**.
 
 ## Step 3 — Turn on GitHub Pages
 1. In your repo, go to **Settings** → **Pages** (left sidebar).
