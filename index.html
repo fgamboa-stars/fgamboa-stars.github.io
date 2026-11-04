@@ -19,8 +19,16 @@
   <!-- REPLACE: This shows in the browser tab -->
   <title> Fernando Gamboa — Portfolio</title>
 
+  <!-- Display typeface for headlines (see "Tech stack" in README.md) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,800;125,900&display=swap" />
+
   <!-- This links your styles.css file to this page -->
   <link rel="stylesheet" href="styles.css" />
+
+  <!-- Optional enhancements: current-section highlight and slide counter -->
+  <script src="script.js" defer></script>
 </head>
 
 <body>
@@ -39,7 +47,7 @@
   </nav>
 
   <!-- ===================== HERO / INTRO ===================== -->
-  <header id="top" class="hero">
+  <header id="top" class="hero slide">
     <!-- REPLACE: your name -->
     <h1>Hi, I'm Fernando Gamboa</h1>
 
@@ -49,28 +57,36 @@
   </header>
 
   <!-- ===================== ABOUT ===================== -->
-  <section id="about" class="section">
-    <h2>About Me</h2>
-    <!-- REPLACE: 2-3 sentences about your background, goals, and what you're learning -->
-    <p>
-      I'm currently a i.c. stars intern, exploring the vast opportunities of software development.
-    </p>
+  <section id="about" class="section slide">
+    <div class="about-layout">
+      <div class="about-intro">
+        <h2>About Me</h2>
+        <!-- REPLACE: 2-3 sentences about your background, goals, and what you're learning -->
+        <p>
+          I'm currently a i.c. stars intern, exploring the vast opportunities of software development.
+        </p>
+      </div>
 
-    <h3>Skills</h3>
-    <!-- REPLACE: add or remove skills as a simple list -->
-    <ul class="skills-list">
-      <li>HTML</li>
-      <li>CSS</li>
-      <li>[JavaScript]</li>
-      <li>[Git &amp; GitHub]</li>
-      <li>[Add your own]</li>
-    </ul>
+      <div class="about-skills">
+        <h3>Skills</h3>
+        <!-- REPLACE: add or remove skills as a simple list -->
+        <ul class="skills-list">
+          <li>HTML</li>
+          <li>CSS</li>
+          <li>[JavaScript]</li>
+          <li>[Git &amp; GitHub]</li>
+          <li>[Add your own]</li>
+        </ul>
+      </div>
+    </div>
   </section>
 
   <!-- ===================== PROJECTS ===================== -->
-  <section id="projects" class="section">
+  <section id="projects" class="section slide">
     <h2>Projects</h2>
 
+    <!-- The 01, 02, 03 markers and the timeline are drawn by styles.css,
+         so new cards are numbered automatically. -->
     <div class="project-grid">
 
       <!-- PROJECT CARD 1 — copy this whole block to add more projects -->
@@ -101,7 +117,7 @@
   </section>
 
   <!-- ===================== CONTACT ===================== -->
-  <section id="contact" class="section">
+  <section id="contact" class="section slide">
     <h2>Get In Touch</h2>
     <p>[Want to work together or just say hi? Reach out.]</p>
 
@@ -116,7 +132,9 @@
   <!-- ===================== FOOTER ===================== -->
   <footer class="footer">
     <!-- REPLACE: your name -->
-    <p>&copy; 2026 Fernando Gamboa. Built with HTML, CSS, and GitHub Pages.</p>
+    <p><span>&copy; 2026 Fernando Gamboa.</span> <span>Built with HTML, CSS, and GitHub Pages.</span></p>
+    <!-- Filled in by script.js; stays hidden if JavaScript is off -->
+    <span class="slide-counter" aria-hidden="true" hidden></span>
   </footer>
 
 </body>

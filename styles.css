@@ -7,26 +7,42 @@
 
   Want to change your colors? Edit the values under ":root" below.
   Every color on the page comes from those few lines.
+
+  The look is a slide deck: a fixed top and bottom bar frame the
+  page, and every section fills the screen like a slide.
+
+  Contents
+    1. Settings        5. Hero            9. Footer bar
+    2. Base            6. Sections       10. Small screens
+    3. Shared type     7. About & skills 11. Motion preferences
+    4. Navigation bar  8. Projects & contact
   ============================================================
 */
 
-/* -------- COLOR & FONT SETTINGS (edit these first!) -------- */
+/* -------- 1. COLOR & FONT SETTINGS (edit these first!) -------- */
 :root {
-  --color-bg:      #ffffff;   /* page background        */
-  --color-text:    #1a1a1a;   /* main text color        */
-  --color-accent:  #2563eb;   /* links & buttons        */
-  --color-muted:   #6b7280;   /* softer/secondary text  */
-  --color-card:    #f3f4f6;   /* project card background */
+  --color-bg:    #ebebeb;   /* page background               */
+  --color-text:  #222222;   /* text, rules, and pills        */
+  --color-muted: #555555;   /* softer/secondary text         */
 
-  --font-main: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  --max-width: 900px;         /* how wide the content gets */
+  --font-display: 'Archivo', 'Arial Black', Arial, sans-serif;  /* headlines */
+  --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;  /* everything else */
+
+  --max-width: 1120px;      /* how wide the content gets     */
+  --gutter: clamp(1.25rem, 4vw, 3.5rem);  /* space at the screen edges */
+  --bar-height: 3.5rem;     /* height of the top & bottom bars */
+  --marker-size: 2.25rem;   /* the 01, 02, 03 project squares  */
 }
 
-/* -------- BASE RESETS (leave these alone to start) -------- */
+/* -------- 2. BASE RESETS (leave these alone to start) -------- */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -37,155 +53,370 @@ body {
 }
 
 a {
-  color: var(--color-accent);
+  color: inherit;
   text-decoration: none;
 }
 
-a:hover {
-  text-decoration: underline;
+a:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 3px;
 }
 
-/* -------- NAVIGATION BAR -------- */
+/* -------- 3. SHARED TYPE & PILLS -------- */
+/* The wide, heavy headline style */
+h1,
+h2,
+.about-skills h3,
+.skills-list li,
+.project-card h3 {
+  font-family: var(--font-display);
+  font-stretch: 125%;
+  font-weight: 900;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+/* The outlined pill shape, used for every button-style link */
+.button,
+.project-link,
+.contact-list a {
+  display: inline-block;
+  min-width: 10rem;
+  padding: 0.35rem 1.5rem;
+  border: 1px solid var(--color-text);
+  border-radius: 999px;
+  font-size: 0.875rem;
+  text-align: center;
+  text-transform: uppercase;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.button:hover,
+.project-link:hover,
+.contact-list a:hover {
+  background-color: var(--color-text);
+  color: var(--color-bg);
+}
+
+/* -------- 4. NAVIGATION BAR -------- */
 .navbar {
+  position: fixed;       /* stays at top when you scroll */
+  inset: 0 0 auto;
+  z-index: 10;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  border-bottom: 1px solid #e5e7eb;
-  position: sticky;      /* stays at top when you scroll */
-  top: 0;
+  height: var(--bar-height);
+  padding-inline: var(--gutter);
   background-color: var(--color-bg);
+  border-bottom: 1px solid var(--color-text);
+  font-size: 0.875rem;
 }
 
-.nav-logo {
-  font-weight: bold;
-  font-size: 1.2rem;
-  color: var(--color-text);
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
 }
 
-.nav-links a {
-  margin-left: 1.5rem;
-  color: var(--color-text);
+.nav-logo:hover,
+.nav-links a:hover,
+.nav-links a[aria-current="true"] {
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
 }
 
-/* -------- HERO / INTRO SECTION -------- */
+/* -------- 5. HERO / INTRO SECTION -------- */
 .hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  padding: 5rem 2rem;
 }
 
 .hero h1 {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
+  max-width: 100%;
+  font-size: clamp(2.25rem, 6.4vw, 6.5rem);
+  text-wrap: balance;
+  margin-bottom: 1.75rem;
 }
 
 .tagline {
-  font-size: 1.2rem;
+  max-width: 38rem;
   color: var(--color-muted);
-  margin-bottom: 2rem;
+  margin-bottom: 1.75rem;
 }
 
-/* -------- BUTTONS -------- */
-.button {
-  display: inline-block;
-  background-color: var(--color-accent);
-  color: #ffffff;
-  padding: 0.75rem 1.5rem;
-  border-radius: 6px;
-  font-weight: 600;
+/* -------- 6. GENERAL SECTIONS (each one is a "slide") -------- */
+.slide {
+  min-height: 100vh;
+  min-height: 100svh;    /* accounts for mobile browser toolbars */
+  padding-block: calc(var(--bar-height) + 2.5rem);
+  padding-inline: max(var(--gutter), calc((100% - var(--max-width)) / 2));
+  border-bottom: 1px solid var(--color-text);
 }
 
-.button:hover {
-  opacity: 0.9;
-  text-decoration: none;
-}
-
-/* -------- GENERAL SECTIONS -------- */
 .section {
-  max-width: var(--max-width);
-  margin: 0 auto;          /* centers the section */
-  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .section h2 {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
+  font-size: clamp(2rem, 4.6vw, 4rem);
+  margin-bottom: 1.25rem;
 }
 
-.section h3 {
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
+/* Settle on a slide while scrolling, on screens big enough to fit one */
+@media (min-width: 701px) and (min-height: 600px) {
+  html {
+    scroll-snap-type: y proximity;
+  }
+
+  .slide {
+    scroll-snap-align: start;
+  }
 }
 
-/* -------- SKILLS LIST -------- */
+/* -------- 7. ABOUT & SKILLS -------- */
+.about-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2.5rem, 7vw, 6rem);
+  align-items: center;
+}
+
+.about-intro p {
+  max-width: 30rem;
+}
+
+.about-skills h3 {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  margin-bottom: 1.25rem;
+}
+
+/* Ruled rows */
 .skills-list {
   list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  border-top: 1px solid var(--color-text);
 }
 
 .skills-list li {
-  background-color: var(--color-card);
-  padding: 0.4rem 0.9rem;
-  border-radius: 20px;
-  font-size: 0.9rem;
+  padding-block: 0.9rem;
+  border-bottom: 1px solid var(--color-text);
+  font-size: 1.05rem;
 }
 
-/* -------- PROJECT CARDS -------- */
+/* -------- 8. PROJECTS (a numbered timeline) & CONTACT -------- */
+#projects h2 {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
 .project-grid {
+  counter-reset: project;
   display: grid;
-  /* Auto-fits as many cards per row as will fit, min 250px wide */
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  margin-top: 1.5rem;
+  /* Auto-fits as many cards per row as will fit, min 240px wide */
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  row-gap: 3rem;
 }
 
 .project-card {
-  background-color: var(--color-card);
-  padding: 1.5rem;
-  border-radius: 8px;
+  counter-increment: project;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: calc(var(--marker-size) + 1.25rem) 1.5rem 0;
+  text-align: center;
+}
+
+/* The numbered square */
+.project-card::before {
+  content: counter(project, decimal-leading-zero);
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: calc(50% - var(--marker-size) / 2);
+  display: grid;
+  place-items: center;
+  width: var(--marker-size);
+  height: var(--marker-size);
+  background-color: var(--color-text);
+  color: var(--color-bg);
+  font-size: 0.8rem;
+}
+
+/* The line running through the squares; each card draws its own piece */
+.project-card::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--marker-size) / 2 - 5px);
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: linear-gradient(var(--color-text), var(--color-text)) center / 100% 1px no-repeat;
+}
+
+/* The arrowhead at the end of the line */
+.project-card:last-child::after {
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M0 0l10 5L0 10z' fill='%23222222'/%3E%3C/svg%3E") right center / 10px 10px no-repeat,
+    linear-gradient(var(--color-text), var(--color-text)) center / 100% 1px no-repeat;
 }
 
 .project-card h3 {
-  margin-top: 0;
+  font-size: 1.05rem;
+  margin-bottom: 0.75rem;
+}
+
+.project-card p {
+  font-size: 0.95rem;
+  color: var(--color-muted);
+  margin-bottom: 1.25rem;
 }
 
 .project-link {
-  display: inline-block;
-  margin-top: 1rem;
-  font-weight: 600;
+  margin-top: auto;      /* lines the pills up across the cards */
 }
 
-/* -------- CONTACT LIST -------- */
+#contact p {
+  max-width: 38rem;
+}
+
 .contact-list {
   list-style: none;
   display: flex;
-  gap: 1.5rem;
-  margin-top: 1rem;
-}
-
-/* -------- FOOTER -------- */
-.footer {
-  text-align: center;
-  padding: 2rem;
-  color: var(--color-muted);
-  border-top: 1px solid #e5e7eb;
+  flex-wrap: wrap;
+  gap: 1rem;
   margin-top: 2rem;
 }
 
-/* -------- MOBILE FRIENDLY -------- */
+/* -------- 9. FOOTER BAR -------- */
+.footer {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  height: var(--bar-height);
+  padding-inline: var(--gutter);
+  background-color: var(--color-bg);
+  border-top: 1px solid var(--color-text);
+  font-size: 0.875rem;
+}
+
+.footer p {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.slide-counter {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* -------- 10. MOBILE FRIENDLY -------- */
 /* When the screen is narrow (phones), stack things vertically */
-@media (max-width: 600px) {
-  .navbar {
-    flex-direction: column;
-    gap: 0.5rem;
+@media (max-width: 700px) {
+  :root {
+    --bar-height: 3rem;
   }
-  .nav-links a {
-    margin-left: 0;
-    margin-right: 1rem;
+
+  .nav-links {
+    gap: 1rem;
   }
+
   .hero h1 {
-    font-size: 2rem;
+    font-size: clamp(2rem, 10.5vw, 4.5rem);
+  }
+
+  /* Only the hero and contact slides need to fill the screen here */
+  .section {
+    min-height: 0;
+    padding-block: calc(var(--bar-height) + 2rem) 3rem;
+  }
+
+  #contact {
+    min-height: calc(100svh - 5rem);
+    border-bottom: 0;
+  }
+
+  .about-layout {
+    grid-template-columns: 1fr;
+  }
+
+  /* The timeline turns vertical, with the squares down the left edge */
+  #projects h2 {
+    text-align: left;
+    margin-bottom: 2rem;
+  }
+
+  .project-grid {
+    grid-template-columns: 1fr;
+    row-gap: 0;
+  }
+
+  .project-card {
+    align-items: flex-start;
+    padding: 0 0 2.5rem calc(var(--marker-size) + 1rem);
+    text-align: left;
+  }
+
+  .project-card::before {
+    left: 0;
+  }
+
+  .project-card::after {
+    top: 0;
+    bottom: 0;
+    left: calc(var(--marker-size) / 2);
+    right: auto;
+    width: 1px;
+    height: auto;
+    background: var(--color-text);
+  }
+
+  .project-card:last-child {
+    padding-bottom: 0;
+  }
+
+  .project-card:last-child::after {
+    display: none;
+  }
+
+  .contact-list {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* The footer sits at the end of the page instead of taking up screen space */
+  .footer {
+    position: static;
+    height: auto;
+    padding-block: 1rem;
+  }
+
+  .footer p {
+    flex-direction: column;
+  }
+
+  .slide-counter {
+    display: none;
+  }
+}
+
+/* -------- 11. MOTION PREFERENCES -------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .button,
+  .project-link,
+  .contact-list a {
+    transition: none;
   }
 }
