@@ -98,6 +98,12 @@ h2,
   color: var(--color-bg);
 }
 
+/* Show the full address in lowercase so visitors without a mail app
+   can still read and copy it */
+.contact-list .contact-email {
+  text-transform: none;
+}
+
 /* -------- 4. NAVIGATION BAR -------- */
 .navbar {
   position: fixed;       /* stays at top when you scroll */
